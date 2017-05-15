@@ -1,2 +1,3 @@
-a = 1;
-p = a
+function y=GraduationDesign_CalcH():
+    
+end
