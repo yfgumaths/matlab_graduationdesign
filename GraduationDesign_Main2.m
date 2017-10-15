@@ -32,18 +32,20 @@ function GraduationDesign_Main2()
     diedai_qq1 = g11 * diedai_ctl1 + g12 * diedai_ctl2;
     diedai_qq2 = g21 * diedai_ctl1 + g12 * diedai_ctl2;
     nowShang = GraduationDesign_CalcModelShang(diedai_qq1,diedai_qq2);
+    plot_y = zeros(maxStep,1);
     
     while(i < maxStep)
         perShang = nowShang;
         diedai_dq1 = -1*alpha*diedai_qq1 - beta*diedai_qq1^3 - gamma*diedai_qq2 - sita*diedai_qq2^3;
         diedai_dq2 = -1*alpha2*diedai_qq2 - beta2*diedai_qq2^3 - gamma2*diedai_qq1 - sita2*diedai_qq1^3;
-        diedai_qq1 = diedai_qq1 + diedai_dq1 
-        diedai_qq2 = diedai_qq2 + diedai_dq2
+        diedai_qq1 = diedai_qq1 + diedai_dq1;
+        diedai_qq2 = diedai_qq2 + diedai_dq2;
         diedai_Y = [diedai_qq1;diedai_qq2];
         diedai_X = [g11,g12;
                     g21,g22];
-        diedai_Alpha = regress(diedai_Y,diedai_X)
+        diedai_Alpha = regress(diedai_Y,diedai_X);
         nowShang = GraduationDesign_CalcModelShang(diedai_qq1,diedai_qq2);
+        plot_y(i+1) = nowShang;
         nowShang
         if abs(nowShang - perShang) < epsilon 
             i
@@ -58,5 +60,9 @@ function GraduationDesign_Main2()
             g21,g22]
     ansAlpha = regress(ansY,ansX)
     ansAlpha(1)+ansAlpha(2) - ansQ1 - ansQ2
+    i = i + 1
+    plot_x = 1:i
+    plot_y = plot_y(1:i)
+    plot(plot_x,plot_y)
     
 end

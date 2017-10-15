@@ -2,7 +2,7 @@ function ans = GraduationDesign_GetMinLamda(fai,v,G,n)
     syms lamda;
     mat = v - lamda*G;
     func = GraduationDesign_SignFunctionSubs(fai,mat,n);
-    [lam0,minfunc]=fminbnd(matlabFunction(func),0,10000);
+    [lam0,minfunc]=fminbnd(matlabFunction(func),0,1);
     ans = lam0;
 end
 
